@@ -14,4 +14,11 @@
     <string name="display_name">Display Name</string>
     <string name="pick_image">Pick Image</string>
     <string name="image_preview">Image Preview</string>
+    <string name="preparation_instructions">Preparation Instructions</string>
+    <string name="preparation_time_in_minutes">Preparation Time (in minutes)</string>
+    <string name="unit">Unit</string>
+    <string name="qty">Qty</string>
+    <string name="name">Name</string>
+    <string name="recipe_title">Recipe Title</string>
+    <string name="submit_post">Submit Post</string>
 </resources>
