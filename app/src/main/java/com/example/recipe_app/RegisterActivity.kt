@@ -5,7 +5,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -72,19 +71,22 @@ class RegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            registerUser(email, password, displayName)
+            CloudinaryUploader.uploadImage(profileImageUri!!) { imageUrl ->
+                if (imageUrl != null) {
+                    registerUser(email, password, displayName, imageUrl)
+                } else {
+                    Toast.makeText(this, "Image upload failed.", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
         loginText.setOnClickListener { _: View? ->
-            val intent = Intent(
-                this,
-                LoginActivity::class.java
-            )
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
     }
 
-    private fun registerUser(email: String, password: String, displayName: String) {
+    private fun registerUser(email: String, password: String, displayName: String, imageUrl: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -92,7 +94,7 @@ class RegisterActivity : AppCompatActivity() {
                     user?.let {
                         val profileUpdates = UserProfileChangeRequest.Builder()
                             .setDisplayName(displayName)
-                            .setPhotoUri(this.profileImageUri)
+                            .setPhotoUri(Uri.parse(imageUrl))
                             .build()
 
                         it.updateProfile(profileUpdates)
@@ -102,7 +104,7 @@ class RegisterActivity : AppCompatActivity() {
                                     startActivity(Intent(this, LoginActivity::class.java))
                                     finish()
                                 } else {
-                                    Toast.makeText(this, "Registration failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this, "Profile update failed: ${profileTask.exception?.message}", Toast.LENGTH_SHORT).show()
                                 }
                             }
                     }
