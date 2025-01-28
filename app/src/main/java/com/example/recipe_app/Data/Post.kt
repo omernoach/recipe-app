@@ -6,7 +6,7 @@ import com.google.firebase.firestore.ServerTimestamp
 
 data class Post(
     val title: String = "",
-    val ingredients: String = "",
+    val ingredients: MutableList<Ingredient>,
     val preparation: String = "",
     val preparationTime: Int = 0,
     val imageUrl: String = "",
