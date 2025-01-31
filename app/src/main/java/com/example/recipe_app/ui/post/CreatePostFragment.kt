@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.recipe_app.Data.Ingredient
-import com.example.recipe_app.Data.Post
 import com.example.recipe_app.R
 import com.example.recipe_app.databinding.FragmentCreatePostBinding
 
@@ -25,7 +24,7 @@ class CreatePostFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var viewModel: CreatePostViewModel
 
-    private val ingredientsList = mutableListOf<Ingredient>()
+    private val ingredientsList = mutableListOf<Ingredient>() // ✅ Stores ingredients
     private var selectedImageUri: Uri? = null
 
     override fun onCreateView(
@@ -45,6 +44,7 @@ class CreatePostFragment : Fragment() {
             imagePickerLauncher.launch(intent)
         }
 
+        // Add ingredient
         binding.btnAddIngredient.setOnClickListener {
             val name = binding.editTextIngredientName.text.toString()
             val quantity = binding.editTextIngredientQuantity.text.toString().toIntOrNull() ?: 0
@@ -52,7 +52,7 @@ class CreatePostFragment : Fragment() {
 
             if (name.isNotEmpty() && unit.isNotEmpty()) {
                 val ingredient = Ingredient(name, quantity, unit)
-                ingredientsList.add(ingredient)
+                ingredientsList.add(ingredient) // ✅ Add to List<Ingredient>
                 updateIngredientsUI()
                 binding.editTextIngredientName.text?.clear()
                 binding.editTextIngredientQuantity.text?.clear()
@@ -68,14 +68,11 @@ class CreatePostFragment : Fragment() {
             val preparationTime = binding.editTextPreparationTime.text.toString().toIntOrNull() ?: 0
 
             if (selectedImageUri != null) {
-                // Upload the image to Cloudinary Storage
                 CloudinaryUploader.uploadImage(selectedImageUri!!) { imageUrl ->
-                    // Once the image is uploaded, create the post
                     if (imageUrl != null) {
-                        // Pass the data to the ViewModel
                         viewModel.createPost(
                             title = title,
-                            ingredients = "",
+                            ingredients = ingredientsList.toList(), // ✅ Pass List<Ingredient>
                             preparation = preparation,
                             preparationTime = preparationTime,
                             imageUrl = imageUrl
@@ -91,7 +88,6 @@ class CreatePostFragment : Fragment() {
             }
         }
 
-
         return binding.root
     }
 
@@ -106,7 +102,6 @@ class CreatePostFragment : Fragment() {
         }
 
     private fun updateIngredientsUI() {
-        // Updating the ingredients list UI based on the mutable list of ingredients
         val ingredientsText = ingredientsList.joinToString("\n") { "${it.name} - ${it.quantity} ${it.unit}" }
         binding.textIngredientsList.text = ingredientsText
     }

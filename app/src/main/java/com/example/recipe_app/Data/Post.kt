@@ -5,10 +5,11 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 
 @Entity(tableName = "posts")
+@TypeConverters(Converters::class)
 data class Post(
-    @PrimaryKey(autoGenerate = true) val id: Int =0,
+    @PrimaryKey val id: String,
     val title: String = "",
-    val ingredients: String = "",
+    val ingredients: List<Ingredient> = listOf(),
     val preparation: String = "",
     val preparationTime: Int = 0,
     val imageUrl: String = "",

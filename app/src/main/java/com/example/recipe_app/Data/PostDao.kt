@@ -2,13 +2,14 @@ package com.example.recipe_app.Data
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 
 @Dao
 interface PostDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(post: Post)
 
     @Update

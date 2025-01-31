@@ -2,17 +2,17 @@ package com.example.recipe_app.Data
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class Converters {
-
     @TypeConverter
-    fun fromIngredientsList(ingredients: MutableList<Ingredient>): String {
-        return Gson().toJson(ingredients)
+    fun fromIngredientList(value: List<Ingredient>): String {
+        return Gson().toJson(value)
     }
 
     @TypeConverter
-    fun toIngredientsList(ingredientsString: String): MutableList<Ingredient> {
-        val listType = object : com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken<MutableList<Ingredient>>() {}.type
-        return Gson().fromJson(ingredientsString, listType)
+    fun toIngredientList(value: String): List<Ingredient> {
+        val listType = object : TypeToken<List<Ingredient>>() {}.type
+        return Gson().fromJson(value, listType)
     }
 }
