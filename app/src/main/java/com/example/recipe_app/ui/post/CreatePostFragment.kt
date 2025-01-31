@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.recipe_app.Data.Ingredient
+import com.example.recipe_app.Data.Post
 import com.example.recipe_app.R
 import com.example.recipe_app.databinding.FragmentCreatePostBinding
 
@@ -71,7 +72,14 @@ class CreatePostFragment : Fragment() {
                 CloudinaryUploader.uploadImage(selectedImageUri!!) { imageUrl ->
                     // Once the image is uploaded, create the post
                     if (imageUrl != null) {
-                        viewModel.createPost(title, ingredientsList, preparation, preparationTime, imageUrl) { success ->
+                        // Pass the data to the ViewModel
+                        viewModel.createPost(
+                            title = title,
+                            ingredients = "",
+                            preparation = preparation,
+                            preparationTime = preparationTime,
+                            imageUrl = imageUrl
+                        ) { success ->
                             val message = if (success) "Post created successfully!" else "Error creating post."
                             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
                             if (success) findNavController().navigate(R.id.action_createPostFragment_to_homeFragment)
@@ -83,7 +91,6 @@ class CreatePostFragment : Fragment() {
             }
         }
 
-        setMenuVisibility(true)
 
         return binding.root
     }
@@ -98,9 +105,8 @@ class CreatePostFragment : Fragment() {
             }
         }
 
-
-
     private fun updateIngredientsUI() {
+        // Updating the ingredients list UI based on the mutable list of ingredients
         val ingredientsText = ingredientsList.joinToString("\n") { "${it.name} - ${it.quantity} ${it.unit}" }
         binding.textIngredientsList.text = ingredientsText
     }
@@ -118,10 +124,5 @@ class CreatePostFragment : Fragment() {
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        activity?.actionBar?.setDisplayHomeAsUpEnabled(true)
     }
 }

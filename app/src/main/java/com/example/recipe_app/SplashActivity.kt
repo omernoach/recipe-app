@@ -3,6 +3,9 @@ package com.example.recipe_app
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import com.google.firebase.FirebaseApp
 import com.cloudinary.android.MediaManager
 
@@ -10,6 +13,7 @@ import com.cloudinary.android.MediaManager
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         FirebaseApp.initializeApp(this)
         val config = mapOf(
             "cloud_name" to "djargrig1",
