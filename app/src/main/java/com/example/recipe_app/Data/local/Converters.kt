@@ -1,6 +1,7 @@
-package com.example.recipe_app.Data
+package com.example.recipe_app.Data.local
 
 import androidx.room.TypeConverter
+import com.example.recipe_app.Data.model.Ingredient
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

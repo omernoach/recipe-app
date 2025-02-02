@@ -1,4 +1,4 @@
-package com.example.recipe_app.ui.post
+package com.example.recipe_app.ui.addPost
 
 import CloudinaryUploader
 import android.app.Activity
@@ -6,7 +6,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -14,7 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.recipe_app.Data.Ingredient
+import com.example.recipe_app.Data.model.Ingredient
 import com.example.recipe_app.R
 import com.example.recipe_app.databinding.FragmentCreatePostBinding
 
@@ -79,7 +78,7 @@ class CreatePostFragment : Fragment() {
                         ) { success ->
                             val message = if (success) "Post created successfully!" else "Error creating post."
                             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-                            if (success) findNavController().navigate(R.id.action_createPostFragment_to_homeFragment)
+                            if (success) findNavController().navigate(R.id.action_homeFragment_to_createPostFragment)
                         }
                     }
                 }
@@ -109,15 +108,5 @@ class CreatePostFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                findNavController().navigate(R.id.action_createPostFragment_to_homeFragment)
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 }

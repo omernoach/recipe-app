@@ -24,24 +24,14 @@
         tools:layout="@layout/fragment_notifications" />
 
     <fragment
-        android:id="@+id/navigation_omer"
-        android:name="com.example.recipe_app.ui.omer.OmerFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_omer" />
-
-    <fragment
         android:id="@+id/createPostFragment"
-        android:name="com.example.recipe_app.ui.post.CreatePostFragment"
+        android:name="com.example.recipe_app.ui.addPost.CreatePostFragment"
         android:label="Add post"
         tools:layout="@layout/fragment_create_post" />
 
     <action
         android:id="@+id/action_homeFragment_to_createPostFragment"
         app:destination="@id/createPostFragment" />
-
-    <action
-        android:id="@+id/action_createPostFragment_to_homeFragment"
-        app:destination="@id/navigation_home" />
 
 
 </navigation>

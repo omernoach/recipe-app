@@ -1,8 +1,9 @@
-package com.example.recipe_app.Data
+package com.example.recipe_app.Data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
+import com.example.recipe_app.Data.local.Converters
 
 @Entity(tableName = "posts")
 @TypeConverters(Converters::class)

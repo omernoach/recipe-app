@@ -1,10 +1,11 @@
-package com.example.recipe_app.Data
+package com.example.recipe_app.Data.local
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.example.recipe_app.Data.model.Post
 
 @Dao
 interface PostDao {
