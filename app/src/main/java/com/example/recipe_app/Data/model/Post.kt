@@ -15,6 +15,15 @@ data class Post(
     val preparationTime: Int = 0,
     val imageUrl: String = "",
     val userId: String = "",
-    val createdAt: Long? = null,
+    var createdAt: Long? = null,
     val updatedAt: Long? = null
-)
+) {
+    constructor() : this("", "", listOf(), "", 0, "", "", null, null)
+
+    fun setCreatedAtFromString(createdAtString: String?) {
+        this.createdAt = createdAtString?.toLongOrNull()
+    }
+}
+
+
+

@@ -17,8 +17,8 @@ interface PostDao {
     suspend fun update(post: Post)
 
     @Query("SELECT * FROM posts WHERE id = :postId")
-    suspend fun getPostById(postId: Int): Post?  // עדכון לסוג ID כ-Int
+    suspend fun getPostById(postId: String): Post?
 
     @Query("DELETE FROM posts WHERE id = :postId")
-    suspend fun deletePost(postId: Int)  // עדכון לסוג ID כ-Int
+    suspend fun deletePost(postId: String)
 }

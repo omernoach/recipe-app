@@ -1,5 +1,6 @@
 package com.example.recipe_app.Data.remote
 import android.net.Uri
+import android.util.Log
 import com.example.recipe_app.Data.model.Post
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
@@ -56,11 +57,15 @@ class FirebaseService {
     suspend fun getAllPosts(): List<Post> {
         return try {
             val snapshot = firestore.collection("posts").get().await()
-            snapshot.documents.mapNotNull { it.toObject(Post::class.java) }
+            val posts = snapshot.documents.mapNotNull { it.toObject(Post::class.java) }
+            Log.d("FirebaseService", "Fetched ${posts.size} posts from Firebase.")
+            posts
         } catch (e: Exception) {
+            Log.e("FirebaseService", "Error fetching posts from Firebase", e)
             emptyList()
         }
     }
+
 
     suspend fun getPostsByUser(userId: String): List<Post> {
         return try {
