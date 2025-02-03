@@ -12,16 +12,13 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.recipe_app.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import androidx.lifecycle.lifecycleScope
-import com.example.recipe_app.Data.local.AppDatabase
-import com.example.recipe_app.Data.local.PostDao
-import com.example.recipe_app.Data.remote.FirebaseService
+import com.example.recipe_app.Data.repository.PostRepository
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var firebaseService: FirebaseService
-    private lateinit var postDao: PostDao
+    private lateinit var postRepository: PostRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,13 +34,13 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications, R.id.createPostFragment
+                R.id.navigation_home, R.id.navigation_posts, R.id.navigation_notifications, R.id.createPostFragment
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        firebaseService = FirebaseService()
-        postDao = AppDatabase.getDatabase(applicationContext).postDao()
+
+        postRepository = PostRepository(application)
 
         synchronizeFirebaseWithRoom()
     }
@@ -51,15 +48,7 @@ class MainActivity : AppCompatActivity() {
     private fun synchronizeFirebaseWithRoom() {
         lifecycleScope.launch {
             try {
-                val posts = firebaseService.getAllPosts()
-                if (posts.isEmpty()) {
-                    Log.d("MainActivity", "No posts fetched from Firebase.")
-                    return@launch
-                }
-                posts.forEach { post ->
-                    postDao.insert(post)
-                    Log.d("MainActivity", "Post with ID ${post.id} inserted into ROOM.")
-                }
+                postRepository.syncData()
 
                 Toast.makeText(this@MainActivity, "Firebase and ROOM synced!", Toast.LENGTH_SHORT).show()
             } catch (e: Exception) {
@@ -69,3 +58,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+

@@ -1,5 +1,6 @@
 package com.example.recipe_app.Data.local
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -13,6 +14,9 @@ interface PostDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(post: Post)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPosts(posts: List<Post>)
+
     @Update
     suspend fun update(post: Post)
 
@@ -21,4 +25,13 @@ interface PostDao {
 
     @Query("DELETE FROM posts WHERE id = :postId")
     suspend fun deletePost(postId: String)
+
+    @Query("DELETE FROM posts")
+    suspend fun deleteAllPosts()
+
+    @Query("SELECT * FROM posts")
+    fun getAllPosts(): LiveData<List<Post>>
+
+    @Query("SELECT * FROM posts")
+    suspend fun getAllPostsSync(): List<Post>
 }

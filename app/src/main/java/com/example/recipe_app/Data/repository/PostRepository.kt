@@ -1,27 +1,44 @@
-//package com.example.recipe_app.Data.repository
-//
-//import com.example.recipe_app.Data.Post
-//import com.example.recipe_app.Data.local.PostDao
-//import com.example.recipe_app.Data.FirebaseService
-//import kotlinx.coroutines.Dispatchers
-//import kotlinx.coroutines.withContext
-//
-//class PostRepository(
-//    private val postDao: PostDao,
-//    private val firebaseService: FirebaseService
-//) {
-//
-//    fun getLocalPosts() = postDao.getAllPosts() // Get all posts from Room
-//
-//    suspend fun syncPosts() = withContext(Dispatchers.IO) {
-//        val posts = firebaseService.getPosts() // Fetch from Firebase
-//        postDao.clearAll() // Clear old data
-//        postDao.insertAll(posts) // Save new posts in Room
-//    }
-//
-//    fun observeFirebaseChanges() {
-//        firebaseService.listenForUpdates { posts ->
-//            postDao.insertAll(posts) // Update Room in real-time
-//        }
-//    }
-//}
+package com.example.recipe_app.Data.repository
+
+import android.app.Application
+import android.util.Log
+import androidx.lifecycle.LiveData
+import com.example.recipe_app.Data.local.AppDatabase
+import com.example.recipe_app.Data.local.PostDao
+import com.example.recipe_app.Data.model.Post
+import com.example.recipe_app.Data.remote.FirebaseService
+
+
+class PostRepository(application: Application) {
+    private val postDao: PostDao = AppDatabase.getDatabase(application).postDao()
+    private val firebaseService: FirebaseService = FirebaseService()
+
+    fun getPosts(): LiveData<List<Post>> {
+        return postDao.getAllPosts()
+    }
+
+    suspend fun syncData() {
+        try {
+            val postsFromFirebase = firebaseService.getAllPosts() // קבלת הפוסטים החדשים מ-Firebase
+
+            Log.d("PostRepository", "Fetched posts from Firebase: $postsFromFirebase")
+
+            val postsInRoom = postDao.getAllPostsSync() // עדכון ב-DAO (נראה בהמשך)
+
+            val idsInFirebase = postsFromFirebase.map { it.id }
+            val postsToDelete = postsInRoom.filter { it.id !in idsInFirebase }
+            postsToDelete.forEach { post ->
+                postDao.deletePost(post.id)
+                Log.d("PostRepository", "Deleted post with ID ${post.id} from ROOM")
+            }
+
+            postDao.insertPosts(postsFromFirebase)
+
+        } catch (e: Exception) {
+            Log.e("PostRepository", "Error syncing Firebase with ROOM", e)
+        }
+    }
+}
+
+
+
