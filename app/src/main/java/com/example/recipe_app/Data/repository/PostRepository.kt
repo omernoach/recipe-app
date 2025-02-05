@@ -17,6 +17,10 @@ class PostRepository(application: Application) {
         return postDao.getAllPosts()
     }
 
+    fun getPostsByUser(userId: String): LiveData<List<Post>> {
+        return postDao.getPostsByUser(userId)
+    }
+
     suspend fun syncData() {
         try {
             val postsFromFirebase = firebaseService.getAllPosts() // קבלת הפוסטים החדשים מ-Firebase

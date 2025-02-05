@@ -67,7 +67,7 @@
             app:cornerRadius="24dp"
             app:icon="@drawable/ic_arrow_up"
             app:iconSize="24dp"
-            app:iconTint="@android:color/black" />/>
+            app:iconTint="@android:color/black" />
 
 
 

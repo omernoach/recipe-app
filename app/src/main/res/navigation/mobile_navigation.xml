@@ -19,10 +19,10 @@
         app:backgroundTint="@color/colorPrimary"/>
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.recipe_app.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications"
+        android:id="@+id/navigation_user_posts"
+        android:name="com.example.recipe_app.ui.post.UserPostsFragment"
+        android:label="User Posts"
+        tools:layout="@layout/fragment_user_posts"
         app:backgroundTint="@color/colorPrimary"/>
 
     <fragment

@@ -34,4 +34,8 @@ interface PostDao {
 
     @Query("SELECT * FROM posts")
     suspend fun getAllPostsSync(): List<Post>
+
+    @Query("SELECT * FROM posts WHERE userId = :userId")
+    fun getPostsByUser(userId: String): LiveData<List<Post>>
+
 }
