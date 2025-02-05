@@ -90,19 +90,24 @@
             android:text="+"
             android:textSize="18sp"
             app:cornerRadius="50dp"
-            app:backgroundTint="@color/colorPrimary" />
+            app:backgroundTint="@color/orange" />
     </LinearLayout>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textIngredientsList"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:maxHeight="50dp"
         android:layout_marginTop="8dp"
         android:text=""
         android:textSize="14sp"
+        android:scrollbars="vertical"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ingredientGroupLayout" />
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/instructionsInputLayout"
@@ -152,7 +157,7 @@
         android:text="upload_image"
         android:layout_marginTop="16dp"
         app:cornerRadius="8dp"
-        app:backgroundTint="@color/colorPrimary"
+        app:backgroundTint="@color/orange"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/preparationTimeInputLayout" />
@@ -160,7 +165,7 @@
     <ImageView
         android:id="@+id/imagePreview"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_marginTop="16dp"
         android:scaleType="centerCrop"
         app:layout_constraintTop_toBottomOf="@id/btnUploadImage"
@@ -178,5 +183,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imagePreview"
-        app:backgroundTint="@color/colorPrimary" />
+        app:backgroundTint="@color/purple_500" />
 </androidx.constraintlayout.widget.ConstraintLayout>

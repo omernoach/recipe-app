@@ -14,20 +14,23 @@
     <fragment
         android:id="@+id/navigation_posts"
         android:name="com.example.recipe_app.ui.post.PostFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_post" />
+        android:label="All recipes"
+        tools:layout="@layout/fragment_post"
+        app:backgroundTint="@color/colorPrimary"/>
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.recipe_app.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_notifications"
+        app:backgroundTint="@color/colorPrimary"/>
 
     <fragment
         android:id="@+id/createPostFragment"
         android:name="com.example.recipe_app.ui.addPost.CreatePostFragment"
         android:label="Add post"
-        tools:layout="@layout/fragment_create_post" />
+        tools:layout="@layout/fragment_create_post"
+        app:backgroundTint="@color/colorPrimary"/>
 
     <action
         android:id="@+id/action_homeFragment_to_createPostFragment"

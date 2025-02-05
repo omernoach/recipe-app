@@ -1,4 +1,4 @@
-<androidx.cardview.widget.CardView
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,32 +12,160 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp"
+        android:padding="2dp"
         android:layout_marginBottom="8dp">
 
-        <!-- ImageView for Post Image -->
-        <ImageView
+        <!-- Title for Post (placed above the image) -->
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/postTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Image for Post -->
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/postImage"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
             android:layout_marginBottom="8dp"/>
 
-        <!-- TextView for Post Title -->
-        <TextView
-            android:id="@+id/postTitle"
+        <!-- Ingredients Section -->
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/ingredientsTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:text="Ingredients"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginBottom="4dp"/>
 
-        <!-- TextView for Post Description -->
-        <TextView
-            android:id="@+id/postDescription"
+        <!-- List of Ingredients -->
+        <LinearLayout
+            android:id="@+id/ingredientsList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"/>
+            android:orientation="vertical"
+            android:layout_marginBottom="8dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/expandIngredientsButton"
+            style="@style/Widget.MaterialComponents.Button.Icon"
+            android:layout_width="22dp"
+            android:layout_height="27dp"
+            android:layout_gravity="end"
+            android:backgroundTint="@android:color/transparent"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            android:padding="0dp"
+            android:visibility="visible"
+            app:cornerRadius="24dp"
+            app:icon="@drawable/ic_arrow_up"
+            app:iconSize="24dp"
+            app:iconTint="@android:color/black" />/>
+
+
+
+        <!-- Preparation Section (with expand/collapse functionality) -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/preparationTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Preparation:"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp"/>
+
+            <!-- Collapsible Preparation Text -->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/postPreparation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:textSize="14sp"/>
+
+            <!-- See More / See Less Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/expandCollapseButton"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:layout_width="22dp"
+                android:layout_height="27dp"
+                android:layout_gravity="end"
+                android:backgroundTint="@android:color/transparent"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:insetLeft="0dp"
+                android:insetTop="0dp"
+                android:insetRight="0dp"
+                android:insetBottom="0dp"
+                android:padding="0dp"
+                android:visibility="visible"
+                app:cornerRadius="24dp"
+                app:icon="@drawable/ic_arrow_up"
+                app:iconSize="24dp"
+                app:iconTint="@android:color/black" />
+
+
+
+        </LinearLayout>
+
+        <!-- Other Sections -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp">
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/preparationTimeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Preparation Time:"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginEnd="8dp"/>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/postPreparationTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <!-- Created At (on the same line as the title) -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp">
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/postCreatedAt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <!-- Updated At (on the same line as the title) -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/postUpdatedAt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"/>
+        </LinearLayout>
 
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+
+</com.google.android.material.card.MaterialCardView>

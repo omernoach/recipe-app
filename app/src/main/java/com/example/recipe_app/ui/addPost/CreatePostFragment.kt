@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -86,6 +87,8 @@ class CreatePostFragment : Fragment() {
                 Toast.makeText(requireContext(), "Please select an image for your post.", Toast.LENGTH_SHORT).show()
             }
         }
+
+        binding.textIngredientsList.movementMethod = ScrollingMovementMethod.getInstance()
 
         return binding.root
     }
