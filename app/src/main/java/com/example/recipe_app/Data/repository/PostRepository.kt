@@ -23,11 +23,11 @@ class PostRepository(application: Application) {
 
     suspend fun syncData() {
         try {
-            val postsFromFirebase = firebaseService.getAllPosts() // קבלת הפוסטים החדשים מ-Firebase
+            val postsFromFirebase = firebaseService.getAllPosts()
 
             Log.d("PostRepository", "Fetched posts from Firebase: $postsFromFirebase")
 
-            val postsInRoom = postDao.getAllPostsSync() // עדכון ב-DAO (נראה בהמשך)
+            val postsInRoom = postDao.getAllPostsSync()
 
             val idsInFirebase = postsFromFirebase.map { it.id }
             val postsToDelete = postsInRoom.filter { it.id !in idsInFirebase }

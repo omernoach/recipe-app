@@ -5,7 +5,6 @@ data class Ingredient(
     val quantity: Int = 0,
     val unit: String = ""
 ) {
-    // קונסטרוקטור ברירת מחדל
     constructor() : this("", 0, "")
 }
 

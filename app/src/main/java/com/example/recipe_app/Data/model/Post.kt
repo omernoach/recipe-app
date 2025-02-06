@@ -19,10 +19,6 @@ data class Post(
     val updatedAt: Long? = null
 ) {
     constructor() : this("", "", listOf(), "", 0, "", "", null, null)
-
-    fun setCreatedAtFromString(createdAtString: String?) {
-        this.createdAt = createdAtString?.toLongOrNull()
-    }
 }
 
 
