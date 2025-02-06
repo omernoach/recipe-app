@@ -33,10 +33,6 @@ class HomeFragment : Fragment() {
             textView.text = it
         }
 
-        binding.btnCreatePost.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_createPostFragment)
-        }
-
 
         return root
     }

@@ -1,12 +1,12 @@
-package com.example.recipe_app.ui.post
+package com.example.recipe_app.ui.addPost
 
 import CloudinaryUploader
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -14,7 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.recipe_app.Data.Ingredient
+import com.example.recipe_app.Data.model.Ingredient
 import com.example.recipe_app.R
 import com.example.recipe_app.databinding.FragmentCreatePostBinding
 
@@ -24,7 +24,7 @@ class CreatePostFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var viewModel: CreatePostViewModel
 
-    private val ingredientsList = mutableListOf<Ingredient>()
+    private val ingredientsList = mutableListOf<Ingredient>() // ✅ Stores ingredients
     private var selectedImageUri: Uri? = null
 
     override fun onCreateView(
@@ -44,6 +44,7 @@ class CreatePostFragment : Fragment() {
             imagePickerLauncher.launch(intent)
         }
 
+        // Add ingredient
         binding.btnAddIngredient.setOnClickListener {
             val name = binding.editTextIngredientName.text.toString()
             val quantity = binding.editTextIngredientQuantity.text.toString().toIntOrNull() ?: 0
@@ -51,7 +52,7 @@ class CreatePostFragment : Fragment() {
 
             if (name.isNotEmpty() && unit.isNotEmpty()) {
                 val ingredient = Ingredient(name, quantity, unit)
-                ingredientsList.add(ingredient)
+                ingredientsList.add(ingredient) // ✅ Add to List<Ingredient>
                 updateIngredientsUI()
                 binding.editTextIngredientName.text?.clear()
                 binding.editTextIngredientQuantity.text?.clear()
@@ -67,14 +68,18 @@ class CreatePostFragment : Fragment() {
             val preparationTime = binding.editTextPreparationTime.text.toString().toIntOrNull() ?: 0
 
             if (selectedImageUri != null) {
-                // Upload the image to Cloudinary Storage
                 CloudinaryUploader.uploadImage(selectedImageUri!!) { imageUrl ->
-                    // Once the image is uploaded, create the post
                     if (imageUrl != null) {
-                        viewModel.createPost(title, ingredientsList, preparation, preparationTime, imageUrl) { success ->
+                        viewModel.createPost(
+                            title = title,
+                            ingredients = ingredientsList.toList(), // ✅ Pass List<Ingredient>
+                            preparation = preparation,
+                            preparationTime = preparationTime,
+                            imageUrl = imageUrl
+                        ) { success ->
                             val message = if (success) "Post created successfully!" else "Error creating post."
                             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-                            if (success) findNavController().navigate(R.id.action_createPostFragment_to_homeFragment)
+                            if (success) findNavController().navigate(R.id.action_homeFragment_to_createPostFragment)
                         }
                     }
                 }
@@ -83,7 +88,7 @@ class CreatePostFragment : Fragment() {
             }
         }
 
-        setMenuVisibility(true)
+        binding.textIngredientsList.movementMethod = ScrollingMovementMethod.getInstance()
 
         return binding.root
     }
@@ -98,8 +103,6 @@ class CreatePostFragment : Fragment() {
             }
         }
 
-
-
     private fun updateIngredientsUI() {
         val ingredientsText = ingredientsList.joinToString("\n") { "${it.name} - ${it.quantity} ${it.unit}" }
         binding.textIngredientsList.text = ingredientsText
@@ -108,20 +111,5 @@ class CreatePostFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                findNavController().navigate(R.id.action_createPostFragment_to_homeFragment)
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        activity?.actionBar?.setDisplayHomeAsUpEnabled(true)
     }
 }

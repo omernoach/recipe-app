@@ -11,11 +11,15 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.UserProfileChangeRequest
+import com.example.recipe_app.Data.remote.FirebaseService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class RegisterActivity : AppCompatActivity() {
-    private lateinit var auth: FirebaseAuth
+
+    private lateinit var firebaseService: FirebaseService
     private lateinit var emailEditText: TextInputLayout
     private lateinit var displayNameEditText: TextInputLayout
     private lateinit var passwordEditText: TextInputLayout
@@ -41,7 +45,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        auth = FirebaseAuth.getInstance()
+        firebaseService = FirebaseService()
 
         emailEditText = findViewById(R.id.email_input)
         displayNameEditText = findViewById(R.id.display_name)
@@ -73,7 +77,20 @@ class RegisterActivity : AppCompatActivity() {
 
             CloudinaryUploader.uploadImage(profileImageUri!!) { imageUrl ->
                 if (imageUrl != null) {
-                    registerUser(email, password, displayName, imageUrl)
+                    val imageUri = Uri.parse(imageUrl)
+                    CoroutineScope(Dispatchers.Main).launch {
+                        val success = withContext(Dispatchers.IO) {
+                            firebaseService.registerUser(email, password, displayName, imageUri)
+                        }
+
+                        if (success) {
+                            Toast.makeText(this@RegisterActivity, "Registration successful!", Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+                            finish()
+                        } else {
+                            Toast.makeText(this@RegisterActivity, "Registration failed", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 } else {
                     Toast.makeText(this, "Image upload failed.", Toast.LENGTH_SHORT).show()
                 }
@@ -84,33 +101,5 @@ class RegisterActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
-    }
-
-    private fun registerUser(email: String, password: String, displayName: String, imageUrl: String) {
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    user?.let {
-                        val profileUpdates = UserProfileChangeRequest.Builder()
-                            .setDisplayName(displayName)
-                            .setPhotoUri(Uri.parse(imageUrl))
-                            .build()
-
-                        it.updateProfile(profileUpdates)
-                            .addOnCompleteListener { profileTask ->
-                                if (profileTask.isSuccessful) {
-                                    Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show()
-                                    startActivity(Intent(this, LoginActivity::class.java))
-                                    finish()
-                                } else {
-                                    Toast.makeText(this, "Profile update failed: ${profileTask.exception?.message}", Toast.LENGTH_SHORT).show()
-                                }
-                            }
-                    }
-                } else {
-                    Toast.makeText(this, "Registration failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
-                }
-            }
     }
 }

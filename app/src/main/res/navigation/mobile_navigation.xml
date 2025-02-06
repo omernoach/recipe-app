@@ -12,36 +12,29 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.recipe_app.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_posts"
+        android:name="com.example.recipe_app.ui.post.PostFragment"
+        android:label="All recipes"
+        tools:layout="@layout/fragment_post"
+        app:backgroundTint="@color/colorPrimary"/>
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.recipe_app.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
-
-    <fragment
-        android:id="@+id/navigation_omer"
-        android:name="com.example.recipe_app.ui.omer.OmerFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_omer" />
+        android:id="@+id/navigation_user_posts"
+        android:name="com.example.recipe_app.ui.post.UserPostsFragment"
+        android:label="User Posts"
+        tools:layout="@layout/fragment_user_posts"
+        app:backgroundTint="@color/colorPrimary"/>
 
     <fragment
         android:id="@+id/createPostFragment"
-        android:name="com.example.recipe_app.ui.post.CreatePostFragment"
+        android:name="com.example.recipe_app.ui.addPost.CreatePostFragment"
         android:label="Add post"
-        tools:layout="@layout/fragment_create_post" />
+        tools:layout="@layout/fragment_create_post"
+        app:backgroundTint="@color/colorPrimary"/>
 
     <action
         android:id="@+id/action_homeFragment_to_createPostFragment"
         app:destination="@id/createPostFragment" />
-
-    <action
-        android:id="@+id/action_createPostFragment_to_homeFragment"
-        app:destination="@id/navigation_home" />
 
 
 </navigation>
