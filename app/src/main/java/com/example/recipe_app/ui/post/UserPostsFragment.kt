@@ -41,7 +41,8 @@ class UserPostsFragment : Fragment() {
 
         postViewModel.userPosts.observe(viewLifecycleOwner, Observer { posts ->
             Log.d("UserPostsFragment", "Posts received: $posts")
-            postAdapter.submitList(posts)
+            val sortedPosts = posts.sortedByDescending { it.updatedAt }
+            postAdapter.submitList(sortedPosts)
             progressBar.visibility = View.GONE
         })
 
