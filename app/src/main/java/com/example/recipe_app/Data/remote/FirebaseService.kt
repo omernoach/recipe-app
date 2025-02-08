@@ -79,4 +79,28 @@ class FirebaseService {
             emptyList()
         }
     }
+
+    suspend fun updatePost(post: Post): Boolean {
+        return try {
+            firestore.collection("posts").document(post.id).set(post).await()
+            Log.d("FirebaseService", "Post updated successfully in Firebase: ${post.id}")
+            true
+        } catch (e: Exception) {
+            Log.e("FirebaseService", "Error updating post in Firebase: ${post.id}", e)
+            false
+        }
+    }
+
+    suspend fun deletePost(postId: String): Boolean {
+        return try {
+            firestore.collection("posts").document(postId).delete().await()
+            Log.d("FirebaseService", "Post deleted successfully from Firebase: $postId")
+            true
+        } catch (e: Exception) {
+            Log.e("FirebaseService", "Error deleting post from Firebase: $postId", e)
+            false
+        }
+    }
+
+
 }

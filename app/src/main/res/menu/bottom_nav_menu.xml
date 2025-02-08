@@ -2,25 +2,31 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_home"
-        />
-
-    <item
         android:id="@+id/navigation_posts"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="All recipes" />
 
     <item
         android:id="@+id/navigation_user_posts"
-        android:icon="@drawable/ic_user_posts"
-        android:title="User Posts" />
+        android:icon="@drawable/ic_recepies_book"
+        android:title="My recipes" />
 
     <item
         android:id="@+id/createPostFragment"
         android:icon="@drawable/ic_add_post"
-        android:title="Create Post" />
+        android:title="Create recipe" />
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/title_home"
+        />
+
+    <item
+        android:id="@+id/navigation_dashboard"
+        android:icon="@drawable/ic_user_profile"
+        android:title="@string/title_dashboard"
+        />
 
 
 </menu>
