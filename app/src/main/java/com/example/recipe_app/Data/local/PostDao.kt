@@ -21,7 +21,7 @@ interface PostDao {
     suspend fun update(post: Post)
 
     @Query("SELECT * FROM posts WHERE id = :postId")
-    suspend fun getPostById(postId: String): Post?
+    fun getPostById(postId: String): Post
 
     @Query("DELETE FROM posts WHERE id = :postId")
     suspend fun deletePost(postId: String)
@@ -37,5 +37,8 @@ interface PostDao {
 
     @Query("SELECT * FROM posts WHERE userId = :userId")
     fun getPostsByUser(userId: String): LiveData<List<Post>>
+
+    @Update
+    suspend fun updatePost(post: Post)
 
 }

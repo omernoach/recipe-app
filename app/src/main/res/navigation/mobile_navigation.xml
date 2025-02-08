@@ -6,12 +6,6 @@
     app:startDestination="@+id/navigation_home">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.recipe_app.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
-
-    <fragment
         android:id="@+id/navigation_posts"
         android:name="com.example.recipe_app.ui.post.PostFragment"
         android:label="All recipes"
@@ -21,20 +15,35 @@
     <fragment
         android:id="@+id/navigation_user_posts"
         android:name="com.example.recipe_app.ui.post.UserPostsFragment"
-        android:label="User Posts"
+        android:label="My recipes"
         tools:layout="@layout/fragment_user_posts"
         app:backgroundTint="@color/colorPrimary"/>
 
     <fragment
         android:id="@+id/createPostFragment"
         android:name="com.example.recipe_app.ui.addPost.CreatePostFragment"
-        android:label="Add post"
+        android:label="Create recipe"
         tools:layout="@layout/fragment_create_post"
         app:backgroundTint="@color/colorPrimary"/>
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.recipe_app.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="com.example.recipe_app.ui.dashboard.DashboardFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_dashboard" />
 
     <action
         android:id="@+id/action_homeFragment_to_createPostFragment"
         app:destination="@id/createPostFragment" />
 
+    <action
+        android:id="@+id/action_editPostFragment_to_postFragment"
+        app:destination="@id/navigation_posts" />
 
 </navigation>

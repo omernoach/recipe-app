@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.recipe_app.Data.model.Post
 import com.example.recipe_app.R
 import com.example.recipe_app.databinding.FragmentPostBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -30,7 +31,9 @@ class PostFragment : Fragment() {
         val binding = FragmentPostBinding.inflate(inflater, container, false)
         postViewModel = ViewModelProvider(this).get(PostViewModel::class.java)
 
-        postAdapter = PostAdapter()
+        postAdapter = PostAdapter { post ->
+            deletePost(post)
+        }
         binding.recyclerView.adapter = postAdapter
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
 
@@ -39,9 +42,11 @@ class PostFragment : Fragment() {
 
         postViewModel.posts.observe(viewLifecycleOwner, Observer { posts ->
             Log.d("PostFragment", "Posts received: $posts")
-            postAdapter.submitList(posts)
+            val sortedPosts = posts.sortedByDescending { it.updatedAt }
+            postAdapter.submitList(sortedPosts)
             progressBar.visibility = View.GONE
         })
+
 
         refreshButton.setOnClickListener {
             progressBar.visibility = View.VISIBLE
@@ -71,6 +76,15 @@ class PostFragment : Fragment() {
         })
 
         return binding.root
+    }
+    private fun deletePost(post: Post) {
+        postViewModel.deletePost(post) { success ->
+            if (success) {
+                Toast.makeText(context, "Post deleted successfully", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Failed to delete post", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }
 

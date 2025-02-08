@@ -1,6 +1,7 @@
 
 package com.example.recipe_app.ui.post
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,17 +9,22 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipe_app.R
 import com.example.recipe_app.Data.model.Post
+import com.example.recipe_app.ui.addPost.EditPostFragment
+import com.google.firebase.auth.FirebaseAuth
 import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class PostAdapter : ListAdapter<Post, PostAdapter.PostViewHolder>(PostDiffCallback()) {
+
+class PostAdapter(private val onDeletePost: (Post) -> Unit) : ListAdapter<Post, PostAdapter.PostViewHolder>(PostDiffCallback()) {
+    private val currentUserId: String? = FirebaseAuth.getInstance().currentUser?.uid
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_post, parent, false)
@@ -40,6 +46,9 @@ class PostAdapter : ListAdapter<Post, PostAdapter.PostViewHolder>(PostDiffCallba
         private val updatedAtTextView: TextView = itemView.findViewById(R.id.postUpdatedAt)
         private val postImageView: ImageView = itemView.findViewById(R.id.postImage)
         private val expandCollapseButton: Button = itemView.findViewById(R.id.expandCollapseButton)
+        private val editButton: Button = itemView.findViewById(R.id.editPostButton)
+        private val deleteButton: Button = itemView.findViewById(R.id.deletePostButton)
+
 
         private var isExpanded = false
         private var isIngredientsExpanded = false
@@ -89,7 +98,37 @@ class PostAdapter : ListAdapter<Post, PostAdapter.PostViewHolder>(PostDiffCallba
                 expandCollapseButton.visibility = if (shouldShowButton) View.VISIBLE else View.GONE
                 preparationTextView.maxLines = if (shouldShowButton) 3 else Int.MAX_VALUE
             }
+
+            if (post.userId == currentUserId) {
+                editButton.visibility = View.VISIBLE
+                deleteButton.visibility = View.VISIBLE
+            } else {
+                editButton.visibility = View.GONE
+                deleteButton.visibility = View.GONE
+            }
+
+            editButton.setOnClickListener {
+                val context = itemView.context
+
+                if (context is AppCompatActivity) {
+                    val fragmentTransaction = context.supportFragmentManager.beginTransaction()
+
+                    val editPostFragment = EditPostFragment().apply {
+                        arguments = Bundle().apply {
+                            putString("POST_ID", post.id)
+                        }
+                    }
+
+                    fragmentTransaction.replace(R.id.fragment_container, editPostFragment)
+                    fragmentTransaction.addToBackStack(null)
+                    fragmentTransaction.commit()
+                }
+            }
+            deleteButton.setOnClickListener {
+                onDeletePost(post)
+            }
         }
+
 
         private fun updateIngredientsVisibility() {
             for (i in 0 until ingredientsListLayout.childCount) {

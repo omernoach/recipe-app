@@ -52,5 +52,12 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
+
+        fun deletePost(post: Post, onComplete: (Boolean) -> Unit) {
+            viewModelScope.launch {
+                val success = postRepository.deletePost(post.id)
+                onComplete(success)
+            }
+        }
 }
 

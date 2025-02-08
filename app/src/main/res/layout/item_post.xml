@@ -1,7 +1,6 @@
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="8dp"
@@ -15,7 +14,35 @@
         android:padding="2dp"
         android:layout_marginBottom="8dp">
 
-        <!-- Title for Post (placed above the image) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end|center_vertical" >
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/editPostButton"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:visibility="gone"
+                app:backgroundTint="@android:color/white"
+                app:icon="@drawable/ic_edit"
+                app:iconSize="25dp"
+                app:iconTint="@android:color/black"
+                app:iconGravity="textEnd"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/deletePostButton"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:visibility="gone"
+                app:backgroundTint="@android:color/white"
+                app:icon="@drawable/ic_delete"
+                app:iconSize="25dp"
+                app:iconTint="@android:color/holo_red_dark"
+                app:iconGravity="textEnd"/>
+        </LinearLayout>
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/postTitle"
             android:layout_width="match_parent"
@@ -24,7 +51,6 @@
             android:textStyle="bold"
             android:layout_marginBottom="8dp"/>
 
-        <!-- Image for Post -->
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/postImage"
             android:layout_width="match_parent"
@@ -32,7 +58,6 @@
             android:scaleType="centerCrop"
             android:layout_marginBottom="8dp"/>
 
-        <!-- Ingredients Section -->
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/ingredientsTitle"
             android:layout_width="match_parent"
@@ -42,7 +67,6 @@
             android:textStyle="bold"
             android:layout_marginBottom="4dp"/>
 
-        <!-- List of Ingredients -->
         <LinearLayout
             android:id="@+id/ingredientsList"
             android:layout_width="match_parent"
@@ -69,9 +93,6 @@
             app:iconSize="24dp"
             app:iconTint="@android:color/black" />
 
-
-
-        <!-- Preparation Section (with expand/collapse functionality) -->
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -87,7 +108,6 @@
                 android:textStyle="bold"
                 android:layout_marginBottom="4dp"/>
 
-            <!-- Collapsible Preparation Text -->
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/postPreparation"
                 android:layout_width="match_parent"
@@ -96,7 +116,6 @@
                 android:ellipsize="end"
                 android:textSize="14sp"/>
 
-            <!-- See More / See Less Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/expandCollapseButton"
                 style="@style/Widget.MaterialComponents.Button.Icon"
@@ -119,8 +138,6 @@
 
 
         </LinearLayout>
-
-        <!-- Other Sections -->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -141,7 +158,6 @@
                 android:textSize="14sp"/>
         </LinearLayout>
 
-        <!-- Created At (on the same line as the title) -->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -154,7 +170,6 @@
                 android:textSize="14sp"/>
         </LinearLayout>
 
-        <!-- Updated At (on the same line as the title) -->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -167,5 +182,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
 </com.google.android.material.card.MaterialCardView>
+
+

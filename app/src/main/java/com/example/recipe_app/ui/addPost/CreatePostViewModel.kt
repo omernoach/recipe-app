@@ -10,6 +10,7 @@ import com.example.recipe_app.Data.model.Ingredient
 import com.example.recipe_app.Data.model.Post
 import com.example.recipe_app.Data.local.PostDao
 import com.example.recipe_app.Data.remote.FirebaseService
+import com.example.recipe_app.Data.repository.PostRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -18,11 +19,9 @@ class CreatePostViewModel(application: Application) : AndroidViewModel(applicati
 
     private val postDao: PostDao = AppDatabase.getDatabase(application).postDao()
     private val firebaseService = FirebaseService()
+    private val postRepository: PostRepository = PostRepository(application)
 
-    // LiveData for posts
-    val postsLiveData = MutableLiveData<List<Post>>()
 
-    // Create a new post
     fun createPost(
         title: String,
         ingredients: List<Ingredient>,
@@ -52,34 +51,6 @@ class CreatePostViewModel(application: Application) : AndroidViewModel(applicati
         }
     }
 
-    // Update an existing post
-    fun updatePost(post: Post, onComplete: (Boolean) -> Unit) {
-        viewModelScope.launch {
-            val firebaseSuccess = firebaseService.savePost(post)
-            if (firebaseSuccess) {
-                savePostToRoom(post)
-            }
-            onComplete(firebaseSuccess)
-        }
-    }
-
-    // Get all posts from Firebase and update LiveData
-    fun loadAllPosts() {
-        viewModelScope.launch {
-            val posts = firebaseService.getAllPosts()
-            postsLiveData.postValue(posts)
-        }
-    }
-
-    // Get posts from a specific user and update LiveData
-    fun loadPostsByUser(userId: String) {
-        viewModelScope.launch {
-            val posts = firebaseService.getPostsByUser(userId)
-            postsLiveData.postValue(posts)
-        }
-    }
-
-    // Save the post to Room (local database)
     private suspend fun savePostToRoom(post: Post) {
         try {
             withContext(Dispatchers.IO) {
@@ -87,6 +58,22 @@ class CreatePostViewModel(application: Application) : AndroidViewModel(applicati
             }
         } catch (e: Exception) {
             Log.e("DatabaseError", "Error saving post: ${e.message}", e)
+        }
+    }
+    fun getPostById(postId: String, onResult: (Post?) -> Unit) {
+        viewModelScope.launch {
+            val post = withContext(Dispatchers.IO) {
+                postRepository.getPostById(postId)
+            }
+            onResult(post)
+        }
+    }
+
+
+    fun updatePost(post: Post, onComplete: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            val success = postRepository.updatePost(post)
+            onComplete(success)
         }
     }
 }

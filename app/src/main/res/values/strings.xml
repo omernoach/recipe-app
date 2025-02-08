@@ -20,5 +20,5 @@
     <string name="qty">Qty</string>
     <string name="name">Name</string>
     <string name="recipe_title">Recipe Title</string>
-    <string name="submit_post">Submit Post</string>
+    <string name="submit_post">Add recipe</string>
 </resources>

@@ -72,7 +72,7 @@ class CreatePostFragment : Fragment() {
                     if (imageUrl != null) {
                         viewModel.createPost(
                             title = title,
-                            ingredients = ingredientsList.toList(), // ✅ Pass List<Ingredient>
+                            ingredients = ingredientsList.toList(),
                             preparation = preparation,
                             preparationTime = preparationTime,
                             imageUrl = imageUrl
