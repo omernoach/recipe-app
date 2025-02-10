@@ -3,12 +3,10 @@ package com.example.recipe_app.Data.repository
 import android.net.Uri
 import android.util.Log
 import com.example.recipe_app.Data.local.UserDao
-import com.example.recipe_app.Data.local.UserDatabase
 import com.example.recipe_app.Data.model.User
 import com.example.recipe_app.Data.remote.FirebaseService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.MultipartBody
 
 class UserRepository(private val userDao: UserDao) {
 
@@ -37,12 +35,9 @@ class UserRepository(private val userDao: UserDao) {
         }
     }
     suspend fun logoutUser() {
-        // תחילה מבצעים לוגאאוט ב-Firebase
         firebaseService.logoutUser()
-
-        // ואז נמחק את המשתמש מ-ROOM
         try {
-            userDao.deleteUser()  // מוחק את המשתמש מהטבלה
+            userDao.deleteUser()
             Log.d("UserRepository", "User deleted from ROOM successfully.")
         } catch (e: Exception) {
             Log.e("UserRepository", "Error deleting user from ROOM", e)

@@ -33,9 +33,9 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_userProfile"
         android:name="com.example.recipe_app.ui.user.UserProfileFragment"
-        android:label="@string/title_dashboard"
+        android:label="user profile"
         tools:layout="@layout/fragment_user_profile" />
 
     <action

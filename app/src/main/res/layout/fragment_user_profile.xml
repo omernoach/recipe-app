@@ -6,7 +6,6 @@
     android:padding="16dp"
     android:background="@android:color/white">
 
-    <!-- Logout Icon Button at the Top Left -->
     <ImageButton
         android:id="@+id/btn_logout"
         android:layout_width="50dp"
@@ -20,7 +19,6 @@
         android:padding="8dp"
         app:tint="@android:color/holo_red_light" />
 
-    <!-- Main Content Layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -29,7 +27,6 @@
         android:gravity="center_horizontal"
         android:layout_marginTop="16dp">
 
-        <!-- Profile Picture with Change Button Next to It -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,7 +34,6 @@
             android:gravity="center"
             android:layout_marginBottom="16dp">
 
-            <!-- Enlarged Profile Picture -->
             <ImageView
                 android:id="@+id/profile_image"
                 android:layout_width="180dp"
@@ -46,13 +42,11 @@
                 android:background="@android:color/darker_gray"
                 android:scaleType="centerCrop"
                 android:layout_marginEnd="12dp"
-                android:contentDescription="Profile Picture"
                 android:padding="4dp"
                 android:layout_marginTop="8dp"
                 android:clipToOutline="true"
                 android:outlineProvider="background" />
 
-            <!-- Change Profile Picture Button -->
             <Button
                 android:id="@+id/btn_change_image"
                 android:layout_width="wrap_content"
@@ -66,7 +60,6 @@
                 android:layout_gravity="center_vertical" />
         </LinearLayout>
 
-        <!-- Editable Name -->
         <EditText
             android:id="@+id/name_edit_text"
             android:layout_width="match_parent"
@@ -77,7 +70,6 @@
             android:background="@android:drawable/edit_text"
             android:textSize="16sp" />
 
-        <!-- Non-editable Email -->
         <TextView
             android:id="@+id/email_text_view"
             android:layout_width="match_parent"
@@ -90,7 +82,6 @@
             android:textColor="@android:color/white"
             android:textSize="16sp" />
 
-        <!-- Save Changes Button -->
         <Button
             android:id="@+id/btn_save"
             android:layout_width="match_parent"

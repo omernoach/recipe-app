@@ -51,10 +51,10 @@ class PostRepository(application: Application) {
             firebaseService.updatePost(post)
             postDao.updatePost(post)
             Log.d("PostRepository", "Post updated both in Firebase and Room: ${post.id}")
-            true // הצלחה, מחזירים true
+            true
         } catch (e: Exception) {
             Log.e("PostRepository", "Error updating post", e)
-            false // במקרה של שגיאה מחזירים false
+            false
         }
     }
 

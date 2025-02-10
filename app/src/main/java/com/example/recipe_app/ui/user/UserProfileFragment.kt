@@ -30,7 +30,7 @@ class UserProfileFragment : Fragment() {
     private lateinit var emailTextView: TextView
     private lateinit var saveButton: Button
     private lateinit var changeImageButton: Button
-    private lateinit var logoutButton: ImageButton  // כפתור לוגאאוט
+    private lateinit var logoutButton: ImageButton
 
     private var selectedImageUri: Uri? = null
 
@@ -40,19 +40,16 @@ class UserProfileFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_user_profile, container, false)
 
-        // Initialize views
         profileImageView = view.findViewById(R.id.profile_image)
         nameEditText = view.findViewById(R.id.name_edit_text)
         emailTextView = view.findViewById(R.id.email_text_view)
         saveButton = view.findViewById(R.id.btn_save)
         changeImageButton = view.findViewById(R.id.btn_change_image)
-        logoutButton = view.findViewById(R.id.btn_logout)  // הכפתור החדש
+        logoutButton = view.findViewById(R.id.btn_logout)
 
-        // Observe user data from ViewModel
         userProfileViewModel.user.observe(viewLifecycleOwner, Observer { user ->
             nameEditText.setText(user?.name)
             emailTextView.text = user?.email
-            // Load image using Picasso
             Picasso.get()
                 .load(user?.profileImageUrl)
                 .into(profileImageView)
@@ -60,12 +57,10 @@ class UserProfileFragment : Fragment() {
             Log.d("UserProfileFragment", "User data observed: Name=${user?.name}, Email=${user?.email}, ProfileImage=${user?.profileImageUrl}")
         })
 
-        // Handle image change
         changeImageButton.setOnClickListener {
             pickImageFromGallery()
         }
 
-        // Handle save button click
         saveButton.setOnClickListener {
             val newName = nameEditText.text.toString().trim()
             if (newName.isNotEmpty()) {
@@ -78,29 +73,25 @@ class UserProfileFragment : Fragment() {
             }
         }
 
-        // Handle logout button click
         logoutButton.setOnClickListener {
             userProfileViewModel.logout()  // מבצע את הלוגאאוט
             Snackbar.make(view, "Logged out successfully!", Snackbar.LENGTH_SHORT).show()
             Log.d("UserProfileFragment", "User logged out")
 
-            // ניווט לעמוד התחברות אם צריך
             val intent = Intent(requireContext(), LoginActivity::class.java)
             startActivity(intent)
-            requireActivity().finish()  // סוגר את פעילות המשתמש הנוכחי (UserProfileActivity)
+            requireActivity().finish()
         }
 
         return view
     }
 
-    // Open gallery to pick an image
     private fun pickImageFromGallery() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, IMAGE_PICK_CODE)
     }
 
-    // Handle the selected image result
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == IMAGE_PICK_CODE && resultCode == Activity.RESULT_OK) {

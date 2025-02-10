@@ -2,7 +2,6 @@ package com.example.recipe_app.Data.remote
 import android.net.Uri
 import android.util.Log
 import com.example.recipe_app.Data.model.Post
-import com.example.recipe_app.Data.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
@@ -123,8 +122,6 @@ class FirebaseService {
                 .build()
 
             user?.updateProfile(profileUpdates)?.await()
-
-            // Update in Firestore if needed
             firestore.collection("users").document(user!!.uid).update(
                 mapOf(
                     "name" to name,
