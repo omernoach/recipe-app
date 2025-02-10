@@ -1,4 +1,4 @@
-package com.example.recipe_app
+package com.example.recipe_app.ui.user
 
 import android.content.Intent
 import android.net.Uri
@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
 import com.example.recipe_app.Data.remote.FirebaseService
+import com.example.recipe_app.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -34,6 +34,10 @@ class PostFragment : Fragment() {
         postAdapter = PostAdapter { post ->
             deletePost(post)
         }
+
+        postViewModel.currentUser.observe(viewLifecycleOwner, Observer { user ->
+            postAdapter.setCurrentUser(user)
+        })
         binding.recyclerView.adapter = postAdapter
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
 
