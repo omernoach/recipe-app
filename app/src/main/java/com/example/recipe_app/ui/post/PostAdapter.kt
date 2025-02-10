@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipe_app.R
 import com.example.recipe_app.Data.model.Post
+import com.example.recipe_app.Data.model.User
 import com.example.recipe_app.ui.addPost.EditPostFragment
-import com.google.firebase.auth.FirebaseAuth
 import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -24,8 +24,12 @@ import java.util.Locale
 
 
 class PostAdapter(private val onDeletePost: (Post) -> Unit) : ListAdapter<Post, PostAdapter.PostViewHolder>(PostDiffCallback()) {
-    private val currentUserId: String? = FirebaseAuth.getInstance().currentUser?.uid
+    private var currentUser: User? = null
 
+    fun setCurrentUser(user: User?) {
+        this.currentUser = user
+        notifyDataSetChanged()
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_post, parent, false)
         return PostViewHolder(view)
@@ -99,12 +103,14 @@ class PostAdapter(private val onDeletePost: (Post) -> Unit) : ListAdapter<Post, 
                 preparationTextView.maxLines = if (shouldShowButton) 3 else Int.MAX_VALUE
             }
 
-            if (post.userId == currentUserId) {
-                editButton.visibility = View.VISIBLE
-                deleteButton.visibility = View.VISIBLE
-            } else {
-                editButton.visibility = View.GONE
-                deleteButton.visibility = View.GONE
+            currentUser?.let { user ->
+                if (post.userId == user.uid) {
+                    editButton.visibility = View.VISIBLE
+                    deleteButton.visibility = View.VISIBLE
+                } else {
+                    editButton.visibility = View.GONE
+                    deleteButton.visibility = View.GONE
+                }
             }
 
             editButton.setOnClickListener {

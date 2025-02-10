@@ -23,9 +23,9 @@
         />
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_userProfile"
         android:icon="@drawable/ic_user_profile"
-        android:title="@string/title_dashboard"
+        android:title="user profile"
         />
 
 

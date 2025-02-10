@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@android:color/white">
+
+    <ImageButton
+        android:id="@+id/btn_logout"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_logout"
+        android:scaleType="centerInside"
+        android:contentDescription="Logout"
+        android:padding="8dp"
+        app:tint="@android:color/holo_red_light" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@id/btn_logout"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/profile_image"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:layout_gravity="center"
+                android:background="@android:color/darker_gray"
+                android:scaleType="centerCrop"
+                android:layout_marginEnd="12dp"
+                android:padding="4dp"
+                android:layout_marginTop="8dp"
+                android:clipToOutline="true"
+                android:outlineProvider="background" />
+
+            <Button
+                android:id="@+id/btn_change_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Change"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:textAllCaps="false"
+                android:backgroundTint="@color/orange"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/name_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Name"
+            android:layout_marginTop="8dp"
+            android:padding="12dp"
+            android:background="@android:drawable/edit_text"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/email_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginTop="8dp"
+            android:padding="12dp"
+            android:background="@android:color/darker_gray"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save Changes"
+            android:layout_marginTop="24dp"
+            android:padding="12dp"
+            android:backgroundTint="@color/purple_500"
+            android:textColor="@android:color/white"
+            android:textAllCaps="false" />
+    </LinearLayout>
+
+</RelativeLayout>

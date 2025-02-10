@@ -3,6 +3,7 @@ import android.net.Uri
 import android.util.Log
 import com.example.recipe_app.Data.model.Post
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
@@ -15,6 +16,15 @@ class FirebaseService {
 
     fun getCurrentUserId(): String? = auth.currentUser?.uid
     fun generatePostId(): String = firestore.collection("posts").document().id
+
+    suspend fun logoutUser() {
+        try {
+            auth.signOut()  // מתבצע לוגאאוט
+            Log.d("FirebaseService", "User logged out successfully.")
+        } catch (e: Exception) {
+            Log.e("FirebaseService", "Error during logout", e)
+        }
+    }
 
     suspend fun registerUser(
         email: String,
@@ -66,7 +76,6 @@ class FirebaseService {
         }
     }
 
-
     suspend fun getPostsByUser(userId: String): List<Post> {
         return try {
             val snapshot = firestore.collection("posts")
@@ -102,5 +111,30 @@ class FirebaseService {
         }
     }
 
+    suspend fun updateUserProfile(name: String, profileImageUri: Uri?) {
+        try {
+            val user = auth.currentUser
+            val profileUpdates = UserProfileChangeRequest.Builder()
+                .setDisplayName(name)
+                .apply {
+                    profileImageUri?.let { setPhotoUri(it) }
+                }
+                .build()
 
+            user?.updateProfile(profileUpdates)?.await()
+            firestore.collection("users").document(user!!.uid).update(
+                mapOf(
+                    "name" to name,
+                    "profileImageUrl" to profileImageUri?.toString()
+                )
+            ).await()
+
+        } catch (e: Exception) {
+            Log.e("FirebaseService", "Error updating user profile", e)
+        }
+    }
+
+    fun getCurrentUser(): FirebaseUser? {
+        return FirebaseAuth.getInstance().currentUser
+    }
 }
