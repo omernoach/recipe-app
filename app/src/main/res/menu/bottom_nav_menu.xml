@@ -2,14 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/navigation_Api"
+        android:icon="@drawable/ic_nutrition_food"
+        android:title="Search product"
+        />
+
+    <item
         android:id="@+id/navigation_posts"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="All recipes" />
-
-    <item
-        android:id="@+id/navigation_user_posts"
-        android:icon="@drawable/ic_recepies_book"
-        android:title="My recipes" />
 
     <item
         android:id="@+id/createPostFragment"
@@ -17,10 +18,10 @@
         android:title="Create recipe" />
 
     <item
-        android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_home"
-        />
+        android:id="@+id/navigation_user_posts"
+        android:icon="@drawable/ic_cutlery"
+        android:title="My recipes" />
+
 
     <item
         android:id="@+id/navigation_userProfile"
