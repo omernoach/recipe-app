@@ -62,6 +62,8 @@ dependencies {
     implementation(libs.room.runtime)
     implementation(libs.gson)
     implementation("com.squareup.picasso:picasso:2.71828")
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
 
 
 

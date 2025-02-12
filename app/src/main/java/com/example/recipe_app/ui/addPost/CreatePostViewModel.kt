@@ -3,7 +3,6 @@ package com.example.recipe_app.ui.addPost
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.recipe_app.Data.local.AppDatabase
 import com.example.recipe_app.Data.model.Ingredient

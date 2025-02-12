@@ -19,7 +19,7 @@ class FirebaseService {
 
     suspend fun logoutUser() {
         try {
-            auth.signOut()  // מתבצע לוגאאוט
+            auth.signOut()
             Log.d("FirebaseService", "User logged out successfully.")
         } catch (e: Exception) {
             Log.e("FirebaseService", "Error during logout", e)
@@ -72,19 +72,6 @@ class FirebaseService {
             posts
         } catch (e: Exception) {
             Log.e("FirebaseService", "Error fetching posts from Firebase", e)
-            emptyList()
-        }
-    }
-
-    suspend fun getPostsByUser(userId: String): List<Post> {
-        return try {
-            val snapshot = firestore.collection("posts")
-                .whereEqualTo("userId", userId)
-                .get()
-                .await()
-
-            snapshot.documents.mapNotNull { it.toObject(Post::class.java) }
-        } catch (e: Exception) {
             emptyList()
         }
     }

@@ -24,7 +24,7 @@ class CreatePostFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var viewModel: CreatePostViewModel
 
-    private val ingredientsList = mutableListOf<Ingredient>() // ✅ Stores ingredients
+    private val ingredientsList = mutableListOf<Ingredient>()
     private var selectedImageUri: Uri? = null
 
     override fun onCreateView(
@@ -36,7 +36,6 @@ class CreatePostFragment : Fragment() {
 
         setHasOptionsMenu(true)
 
-        // Image picker
         binding.btnUploadImage.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK).apply {
                 type = "image/*"
@@ -44,7 +43,6 @@ class CreatePostFragment : Fragment() {
             imagePickerLauncher.launch(intent)
         }
 
-        // Add ingredient
         binding.btnAddIngredient.setOnClickListener {
             val name = binding.editTextIngredientName.text.toString()
             val quantity = binding.editTextIngredientQuantity.text.toString().toIntOrNull() ?: 0
@@ -52,7 +50,7 @@ class CreatePostFragment : Fragment() {
 
             if (name.isNotEmpty() && unit.isNotEmpty()) {
                 val ingredient = Ingredient(name, quantity, unit)
-                ingredientsList.add(ingredient) // ✅ Add to List<Ingredient>
+                ingredientsList.add(ingredient)
                 updateIngredientsUI()
                 binding.editTextIngredientName.text?.clear()
                 binding.editTextIngredientQuantity.text?.clear()

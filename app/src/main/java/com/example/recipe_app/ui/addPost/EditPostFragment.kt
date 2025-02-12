@@ -82,12 +82,10 @@ class EditPostFragment : Fragment(R.layout.fragment_create_post) {
 
             if (name.isNotEmpty() && unit.isNotEmpty()) {
                 if (selectedIngredientIndex != null) {
-                    // Update ingredient if selected for editing
                     val updatedIngredient = Ingredient(name, quantity, unit)
                     ingredientsList[selectedIngredientIndex!!] = updatedIngredient
                     selectedIngredientIndex = null
                 } else {
-                    // Add new ingredient
                     val ingredient = Ingredient(name, quantity, unit)
                     ingredientsList.add(ingredient)
                 }
