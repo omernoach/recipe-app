@@ -10,26 +10,21 @@ class CloudinaryUploader {
                 .unsigned("unsigned") // Replace with your unsigned preset name
                 .callback(object : UploadCallback {
                     override fun onStart(requestId: String) {
-                        // Upload started
                     }
 
                     override fun onProgress(requestId: String, bytes: Long, totalBytes: Long) {
-                        // Progress update (optional)
                     }
 
                     override fun onSuccess(requestId: String, resultData: Map<*, *>) {
-                        // Extract the uploaded image URL
                         val imageUrl = resultData["secure_url"] as? String
-                        callback(imageUrl) // Pass the URL back to the caller
+                        callback(imageUrl)
                     }
 
                     override fun onError(requestId: String, error: ErrorInfo) {
-                        // Pass null to the callback on error
                         callback(null)
                     }
 
                     override fun onReschedule(requestId: String, error: ErrorInfo) {
-                        // Handle reschedule (optional)
                         callback(null)
                     }
                 }).dispatch()

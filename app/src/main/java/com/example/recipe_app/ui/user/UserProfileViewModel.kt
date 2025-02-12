@@ -26,18 +26,15 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
 
     private fun fetchUser() {
         viewModelScope.launch {
-            // קודם כל, בודקים אם יש נתונים מהפיירבייס
             val userDataFromFirebase = userRepository.getCurrentFirebaseUser()
             if (userDataFromFirebase != null) {
                 Log.d("UserProfileViewModel", "Fetched user from Firebase: Name=${userDataFromFirebase.name}, Email=${userDataFromFirebase.email}, ProfileImage=${userDataFromFirebase.profileImageUrl}")
 
-                // עדכון ה- Room עם הנתונים מהפיירבייס
                 userRepository.updateUserInRoom(userDataFromFirebase)
                 _user.postValue(userDataFromFirebase)
             } else {
                 Log.d("UserProfileViewModel", "No user data found in Firebase. Checking Room database...")
 
-                // אם אין נתונים בפיירבייס, שולפים מה- Room
                 val userData = userRepository.getUser()
                 if (userData != null) {
                     Log.d("UserProfileViewModel", "Fetched user from Room: Name=${userData.name}, Email=${userData.email}, ProfileImage=${userData.profileImageUrl}")

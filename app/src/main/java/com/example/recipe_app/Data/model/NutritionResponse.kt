@@ -1,7 +1,5 @@
 package com.example.recipe_app.Data.model
 
-// ProductResponse.kt
-
 data class ProductResponse(
     val items: List<ProductItem>
 )
